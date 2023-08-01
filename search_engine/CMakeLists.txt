@@ -2,11 +2,9 @@
 
 project ("search_engine")
 
-set(CMAKE_CXX_STANDARD 17)
+set(JSON_BuildTests OFF CACHE INTERNAL "")
 
 set(INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
-
-set(JSON_BuildTests OFF CACHE INTERNAL "")
 
 add_subdirectory(nlohmann_json)
 
