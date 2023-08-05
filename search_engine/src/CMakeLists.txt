@@ -1,6 +1,8 @@
+set (CMAKE_CXX_STANDARD 17)
+
 cmake_minimum_required (VERSION 3.8)
 
-add_executable (search_engine "search_engine.cpp" "${INCLUDE_DIR}/search_engine.h")
+add_executable (search_engine "search_engine.cpp" "${INCLUDE_DIR}/search_engine.h" "convertJSON.cpp" "InvertedIndex.cpp")
 
 target_include_directories(search_engine PUBLIC ${INCLUDE_DIR})
 
