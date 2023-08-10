@@ -1,6 +1,7 @@
 ﻿#include "search_engine.h"
 #include <Windows.h>
 
+#if 0
 void listing() { //функция для актуализации списка файлов в папке
 	std::vector<std::string> filename;
 	nlohmann::json fileList; //список файлов в формате json
@@ -32,21 +33,35 @@ void listing() { //функция для актуализации списка �
 
 	std::cout << "FILES: " << filesCount << std::endl;
 }
+#endif
 
 int main() {
 	SetConsoleCP(65001); //локализация консоли для вывода кириллицы
 	SetConsoleOutputCP(65001);
 
-	listing();
+	//listing();
 
 	std::vector<std::string> s;
 	ConverterJSON con;
+	InvertedIndex inv;
 
 	s = con.GetTextDocuments();
+	inv.UpdateDocumentBase(s);
+	
 
 	for (int i = 0; i < s.size(); ++i) {
 		std::cout << "FILE " << i+1 << std::endl << s[i] << std::endl;
 	}
 
+	int max_responses = con.GetResponsesLimit();
+	std::cout << "max_responses: " << max_responses << std::endl;
+
+	std::vector<std::string> requests = con.GetRequests();
+	std::cout << "requests: " << std::endl;
+	for (int i = 0; i < requests.size(); ++i) {
+		std::cout << requests[i] << std::endl;
+	}
+
+	
 	return 0;
 }

@@ -1,4 +1,4 @@
-#include "convertJSON.h"
+#include "ConvertJSON.h"
 /**
 * Класс для работы с JSON-файлами
 */
@@ -50,19 +50,55 @@
 	* количества ответов на один запрос
 	* @return
 	*/
-	//int GetResponsesLimit() {
+	int ConverterJSON::GetResponsesLimit() {
+		nlohmann::json json; //переменная для получения содержимого файла конфигурации
 
-	//};
+		std::ifstream config("json/config.json"); //открытие файла config.json для получения содержимого
+
+		int max_responses = 5;
+
+		if (config.is_open()) {
+			config >> json;
+			max_responses = json["config"]["max_responses"];
+		}
+		else {
+			std::cout << "NOT OPEN" << std::endl;
+		}		
+
+		return max_responses;
+	}; //READY
+
 	/**
 	* Метод получения запросов из файла requests.json
 	* @return возвращает список запросов из файла requests.json
 	*/
-	//std::vector<std::string> GetRequests() {
-		
-	//};
+	std::vector<std::string> ConverterJSON::GetRequests() {
+		std::vector<std::string> requests; //вектор содержимого файлов
+
+		nlohmann::json json; //переменная для получения содержимого файла конфигурации
+
+		std::ifstream file("json/requests.json"); //открытие файла requests.json для получения содержимого
+
+		if (file.is_open()) {
+			file >> json;
+		}
+		else {
+			std::cout << "NOT OPEN" << std::endl;
+		}
+
+		nlohmann::json::iterator it = json["requests"].begin();
+
+		while (it != json["requests"].end()) {
+			requests.push_back(*it);
+			++it;
+		}
+
+		return requests;
+	};
+
 	/**
 	* Положить в файл answers.json результаты поисковых запросов
 	*/
-	//void putAnswers(std::vector<std::vector<std::pair<int, float>>> answers) {
+	void ConverterJSON::putAnswers(std::vector<std::vector<std::pair<int, float>>> answers) { //ПОСЛЕ ГОТОВНОСТИ ИНВЕРТИРОВАННОГО ИНДЕКСА
 
-	//};
+	};
