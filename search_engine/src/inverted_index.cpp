@@ -38,21 +38,28 @@ void InvertedIndex::UpdateDocumentBase(std::vector<std::string> input_docs) {
 	file.close();
 
 	std::cout << "FILES: " << filesCount << std::endl;
-
-	for (int i = 0; i < docs.size(); ++i) {
+	
+	docs = input_docs; //перенос содержимого файлов внутрь класса
+	
+	for (int i = 0; i < docs.size(); ++i) { //цикл подсчета каждого слова в файлах
 		std::string::iterator it;
 		std::string bufer;
-		for (it = input_docs[i].begin(); it != input_docs[i].end(); ++it) {
-			if (*it != ',' && *it != '\n') {
+		for (it = docs[i].begin(); it != docs[i].end(); ++it) {
+			if (*it != ',' && *it != '\n' && *it != ' ') {
 				bufer.push_back(*it);
 			}
-			if (*it == ',' || *it == ' ' || *it == '\n') {
-				bufer.push_back(' ');
+			else {
+				freq_dictionary.insert(std::pair<std::string, std::vector<Entry>>(bufer, GetWordCount(bufer)));
+				bufer.clear();
 			}
 		}
-		docs.push_back(bufer);
-		bufer.clear();
 	};
+
+	for (std::map<std::string, std::vector<Entry>>::iterator it = freq_dictionary.begin(); it != freq_dictionary.end(); ++it) {
+		for (int i = 0; i < it->second.size(); ++i) {
+			std::cout << it->first << " - " << it->second[i].doc_id << ":" << it->second[i].count << std::endl;
+		}
+	}
 };
 	/**
 	* Метод определяет количество вхождений слова word в загруженной базе
@@ -66,34 +73,30 @@ void InvertedIndex::UpdateDocumentBase(std::vector<std::string> input_docs) {
 
 std::vector<Entry> InvertedIndex::GetWordCount(const std::string& word) {
 	Entry list;
+	list.count = 0;
+	list.doc_id = 0;
+
 	std::vector<Entry> wordsCount;
 
-	for (int i = 0; i < docs.size(); ++i) {
+	for (int i = 0; i < docs.size(); ++i) { //цикл поиска искомого слова в файлах и подсчет его количества в каждом файле
 		std::string::iterator it;
 		std::string bufer;
 		for (it = docs[i].begin(); it != docs[i].end(); ++it) {
-			if (*it != ',' && *it != '\n') {
+			if (*it != ',' && *it != '\n' && *it != ' ' && *it != '.') {
 				bufer.push_back(*it);
 			}
 			if (bufer == word) {
 				list.doc_id = i;
-				if (list.count > 0) {
-					++list.count;
-				}
-				else {
-					list.count = 1;
-				}
-				std::cout << i << " | " << bufer << std::endl;
+				++list.count;
 				bufer.clear();
 			}
-			if (*it == ',' || *it == ' ' || *it == '\n') bufer.clear();
+			if (*it == ',' || *it == ' ' || *it == '\n' || *it == '.') bufer.clear();
 		}
-		wordsCount.push_back(list);
-
-		return wordsCount;
+		if (list.count > 0) {
+			wordsCount.push_back(list);
+		}
+		list.count = 0; //обнуление данных в структуре для корректного подсчета
+		list.doc_id = 0;
 	};
+	return wordsCount;
 }
-
-
-
-	 // частотный	словарь

@@ -2,6 +2,7 @@
 #include <search_engine.h>
 #include <thread>
 #include <mutex>
+#include <map>
 
 struct Entry {
 	size_t doc_id, count;
