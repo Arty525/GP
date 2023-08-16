@@ -12,6 +12,7 @@ struct Entry {
 	//}
 };
 class InvertedIndex {
+	
 public:
 	InvertedIndex() = default;
 	/**
@@ -28,6 +29,7 @@ public:
 	*/
 	std::vector<Entry> GetWordCount(const std::string& word);
 private:
+	friend SearchServer;
 	std::vector<std::string> docs; // список содержимого документов
 	std::map<std::string, std::vector<Entry>> freq_dictionary; // частотный	словарь
 };
