@@ -35,6 +35,8 @@ std::vector<std::vector<RelativeIndex>> SearchServer::search(const std::vector<s
 		}
 
 	}
+
+	return relativeList;
 };
 
 
