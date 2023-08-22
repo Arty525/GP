@@ -1,8 +1,13 @@
-#pragma once
-#include <search_engine.h>
+#include "convertJSON.h"
+#include <map>
+#include <fstream>
+#include <vector>
+#include <iostream>
+#include <filesystem>
+#include <thread>
+#include <string>
 #include <thread>
 #include <mutex>
-#include <map>
 
 struct Entry {
 	size_t doc_id, count;
@@ -12,6 +17,7 @@ struct Entry {
 	//}
 };
 class InvertedIndex {
+friend class SearchServer;
 	
 public:
 	InvertedIndex() = default;
@@ -29,7 +35,6 @@ public:
 	*/
 	std::vector<Entry> GetWordCount(const std::string& word);
 private:
-	friend SearchServer;
 	std::vector<std::string> docs; // список содержимого документов
 	std::map<std::string, std::vector<Entry>> freq_dictionary; // частотный	словарь
 };

@@ -1,4 +1,4 @@
-#include <inverted_index.h>
+#include "inverted_index.h"
 
 	/**
 	* Обновить или заполнить базу документов, по которой будем совершать
@@ -56,8 +56,9 @@ void InvertedIndex::UpdateDocumentBase(std::vector<std::string> input_docs) {
 	};
 
 	for (std::map<std::string, std::vector<Entry>>::iterator it = freq_dictionary.begin(); it != freq_dictionary.end(); ++it) {
+		std::cout << it->first << " - ";
 		for (int i = 0; i < it->second.size(); ++i) {
-			std::cout << it->first << " - " << it->second[i].doc_id << ":" << it->second[i].count << std::endl;
+			std::cout << it->second[i].doc_id << ":" << it->second[i].count << std::endl;
 		}
 	}
 };
@@ -86,7 +87,7 @@ std::vector<Entry> InvertedIndex::GetWordCount(const std::string& word) {
 				bufer.push_back(*it);
 			}
 			if (bufer == word) {
-				list.doc_id = i;
+				list.doc_id = i+1;
 				++list.count;
 				bufer.clear();
 			}
