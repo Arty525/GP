@@ -44,6 +44,8 @@ int main() {
 	SetConsoleCP(65001); //локализация консоли для вывода кириллицы
 	SetConsoleOutputCP(65001);
 	//setlocale(0, "Russian");
+	//setlocale(LC_ALL, "Russian");
+
 
 	//listing();
 
