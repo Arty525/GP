@@ -16,7 +16,7 @@ std::vector<std::vector<RelativeIndex>> SearchServer::search(const std::vector<s
 
 	for (int i = 0; i < queries_input.size(); ++i) {//цикл разбивки запроса на отдельные слова и добавление их в список
 		std::string bufer;
-			
+		 
 		for (auto it = queries_input[i].begin(); it != queries_input[i].end(); ++it) {
 			if (*it != ' ') {
 				bufer.push_back(*it);
