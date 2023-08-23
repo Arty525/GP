@@ -1,12 +1,10 @@
 ﻿#pragma once
-#include "inverted_index.h"
+#include "InvertedIndex.h"
 #include "ConvertJSON.h"
+#include "Windows.h"
 #include <map>
-#include <fstream>
 #include <vector>
 #include <iostream>
-#include <filesystem>
-#include <thread>
 #include <string>
 
 struct RelativeIndex {
@@ -36,4 +34,5 @@ public:
 	std::vector<std::vector<RelativeIndex>> search(const std::vector<std::string>& queries_input);
 private:
 	InvertedIndex _index;
+
 };

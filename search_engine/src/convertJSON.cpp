@@ -17,26 +17,26 @@
 
 		if (config.is_open()) {
 			config >> json;
+
+			for (int i = 0; i < json["files"].size(); ++i) { //получение содержимого файлов
+				std::string path = json["files"][i];
+				std::string str;
+				std::ifstream file(path);
+
+				if (file.is_open()) {
+					std::cout << "FILE OPEN" << std::endl;
+					std::string str((std::istreambuf_iterator<char>(file)),
+						(std::istreambuf_iterator<char>()));
+					content.push_back(str);
+					file.close();
+				}
+				else {
+					std::cout << "NOT OPEN (convertJSON GetTextDocuments 2)" << std::endl;
+				}
+			}
 		}
 		else {
-			std::cout << "NOT OPEN" << std::endl;
-		}
-
-		for (int i = 0; i < json["files"].size(); ++i) { //получение содержимого файлов
-			std::string path = json["files"][i];
-			std::string str;
-			std::ifstream file(path);
-
-			if (file.is_open()) {
-				std::cout << "FILE OPEN" << std::endl;
-				std::string str((std::istreambuf_iterator<char>(file)),
-					(std::istreambuf_iterator<char>()));
-				content.push_back(str);
-				file.close();
-			}
-			else {
-				std::cout << "NOT OPEN" << std::endl;
-			}
+			std::cout << "NOT OPEN (convertJSON GetTextDocuments 1)" << std::endl;
 		}
 
 		return content;
@@ -62,7 +62,7 @@
 			max_responses = json["config"]["max_responses"];
 		}
 		else {
-			std::cout << "NOT OPEN" << std::endl;
+			std::cout << "NOT OPEN (convertJSON GetResponsesLimit)" << std::endl;
 		}		
 
 		return max_responses;
@@ -83,7 +83,7 @@
 			file >> json;
 		}
 		else {
-			std::cout << "NOT OPEN" << std::endl;
+			std::cout << "NOT OPEN (convertJSON GetRequests)" << std::endl;
 		}
 
 		nlohmann::json::iterator it = json["requests"].begin();

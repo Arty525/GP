@@ -1,5 +1,5 @@
 ﻿#include "search_engine.h"
-#include "Windows.h"
+
 //РАЗОБРАТЬСЯ С ИНКЛУДАМИ!!!!
 
 	/**
@@ -43,14 +43,16 @@ std::vector<std::vector<RelativeIndex>> SearchServer::search(const std::vector<s
 int main() {
 	SetConsoleCP(65001); //локализация консоли для вывода кириллицы
 	SetConsoleOutputCP(65001);
+	//setlocale(0, "Russian");
 
 	//listing();
 
 	std::vector<std::string> s;
 	ConverterJSON con;
 	InvertedIndex inv;
-
+	std::cout << "GetTextDocuments()" << std::endl;
 	s = con.GetTextDocuments();
+	std::cout << "UpdateDocumentBase()" << std::endl;
 	inv.UpdateDocumentBase(s);
 	
 
