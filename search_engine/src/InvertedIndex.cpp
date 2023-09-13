@@ -56,18 +56,19 @@ void InvertedIndex::UpdateDocumentBase(std::vector<std::string> input_docs) {
 		std::string::iterator it;
 		std::string bufer;
 		std::jthread thr { [this, &i, &bufer, &it, &freqLock] {
-			for (it = docs[i].begin(); it != docs[i].end(); ++it) {
-				if (*it != ',' && *it != '\n' && *it != ' ') {
-					bufer.push_back(*it);
-				}
-				else {
-					freqLock.lock();
-					freq_dictionary.insert(std::pair<std::string, std::vector<Entry>>(bufer, GetWordCount(bufer)));
-					bufer.clear();
-					freqLock.unlock();
-				}
+		for (it = docs[i].begin(); it != docs[i].end(); ++it) {
+			if (*it != ',' && *it != '\n' && *it != ' ') {
+				bufer.push_back(*it);
 			}
+			else {
+					freqLock.lock();
+				freq_dictionary.insert(std::pair<std::string, std::vector<Entry>>(bufer, GetWordCount(bufer)));
+				bufer.clear();
+					freqLock.unlock();
+			}
+		}
 		} };
+		}
 	}
 };
 	/*
@@ -76,6 +77,8 @@ void InvertedIndex::UpdateDocumentBase(std::vector<std::string> input_docs) {
 	* @param word слово, частоту вхождений которого необходимо определить
 	* @return возвращает подготовленный список с частотой слов
 	*/
+
+
 
 
 std::vector<Entry> InvertedIndex::GetWordCount(const std::string& word) {
@@ -90,24 +93,24 @@ std::vector<Entry> InvertedIndex::GetWordCount(const std::string& word) {
 		std::string::iterator it;
 		std::string bufer;
 		std::jthread thr{ [this, &i, &bufer, &it, &list, &wordsCount, &word, &countLock] {
-			for (it = docs[i].begin(); it != docs[i].end(); ++it) {
-				if (*it != ',' && *it != '\n' && *it != ' ' && *it != '.') {
-					bufer.push_back(*it);
-				}
-				if (bufer == word) {
+		for (it = docs[i].begin(); it != docs[i].end(); ++it) {
+			if (*it != ',' && *it != '\n' && *it != ' ' && *it != '.') {
+				bufer.push_back(*it);
+			}
+			if (bufer == word) {
 					list.doc_id = i + 1;
-					++list.count;
-					bufer.clear();
-				}
-				if (*it == ',' || *it == ' ' || *it == '\n' || *it == '.') bufer.clear();
+				++list.count;
+				bufer.clear();
 			}
+			if (*it == ',' || *it == ' ' || *it == '\n' || *it == '.') bufer.clear();
+		}
 			countLock.lock();
-			if (list.count > 0) {
-				wordsCount.push_back(list);
-			}
+		if (list.count > 0) {
+			wordsCount.push_back(list);
+		}
 			countLock.unlock();
-			list.count = 0; //обнуление данных в структуре для корректного подсчета
-			list.doc_id = 0;
+		list.count = 0; //обнуление данных в структуре для корректного подсчета
+		list.doc_id = 0;
 		} };
 	};
 	return wordsCount;
