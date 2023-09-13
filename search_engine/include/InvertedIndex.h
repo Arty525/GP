@@ -1,3 +1,4 @@
+#pragma once
 #include "convertJSON.h"
 #include <map>
 #include <fstream>
@@ -6,7 +7,6 @@
 #include <filesystem>
 #include <thread>
 #include <string>
-#include <thread>
 #include <mutex>
 
 struct Entry {
@@ -17,8 +17,6 @@ struct Entry {
 	//}
 };
 class InvertedIndex {
-friend class SearchServer;
-	
 public:
 	InvertedIndex() = default;
 	/**
@@ -35,6 +33,7 @@ public:
 	*/
 	std::vector<Entry> GetWordCount(const std::string& word);
 private:
+	friend class SearchServer;
 	std::vector<std::string> docs; // список содержимого документов
 	std::map<std::string, std::vector<Entry>> freq_dictionary; // частотный	словарь
 };

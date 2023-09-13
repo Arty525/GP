@@ -1,11 +1,13 @@
 ﻿#pragma once
-
+#include "InvertedIndex.h"
+#include "ConvertJSON.h"
+#include "Windows.h"
+#include <map>
+#include <vector>
 #include <iostream>
-#include <convertJSON.h>
-#include <filesystem>
-#include <thread>
-#include <inverted_index.h>
 #include <string>
+#include <exception>
+#include <set>
 
 struct RelativeIndex {
 	size_t doc_id;
@@ -14,16 +16,16 @@ struct RelativeIndex {
 		return (doc_id == other.doc_id && rank == other.rank);
 	}
 };
+
 class SearchServer {
 public:
-
 	/**
 	* @param idx в конструктор класса передаётся ссылка на класс
 	InvertedIndex,
 	* чтобы SearchServer мог узнать частоту слов встречаемых в
 	запросе
 	*/
-	SearchServer(InvertedIndex& idx) : _index(idx) { };
+	SearchServer(InvertedIndex& idx) : _index(idx) {};
 	/**
 	* Метод обработки поисковых запросов
 	* @param queries_input поисковые запросы взятые из файла
@@ -34,5 +36,5 @@ public:
 	std::vector<std::vector<RelativeIndex>> search(const std::vector<std::string>& queries_input);
 private:
 	InvertedIndex _index;
-	
+
 };

@@ -1,10 +1,11 @@
-#include <vector>
-#include <string>
+#pragma once
+//#include "search_engine.h"
 #include "nlohmann/json.hpp"
 #include <fstream>
-#include <map>
+#include <vector>
 #include <iostream>
-
+#include <filesystem>
+#include <string>
 /**
 * Класс для работы с JSON-файлами
 */
