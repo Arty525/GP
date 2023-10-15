@@ -1,0 +1,13 @@
+{
+  "config": {
+    "max_responses": 5,
+    "name": "ASE - Arty Search Engine",
+    "version": "0.1"
+  },
+  "files": [
+    "resources\\1.txt",
+    "resources\\2.txt",
+    "resources\\3.txt",
+    "resources\\4.txt"
+  ]
+}
