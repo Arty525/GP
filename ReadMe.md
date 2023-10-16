@@ -6,10 +6,11 @@
   - Сторонняя библиотека JSON for Modern C++;
   - Система тестирования Google Test.
 
-Для запуска проекта потребуется:
-  - Скачать библиотеку JSON for Modern C++ по ссылке: https://github.com/nlohmann/json;
+Для работы библиотеки JSON for Modern C++ необходимо:
+  - Скачать библиотеку JSON for Modern C++ по ссылке: https://github.com/nlohmann/json/archive/refs/heads/develop.zip;
   - Распаковать библиотеку в корневой каталог проекта;
   - Переименовать папку json-develop в nlohmann_json;
+  - В файл CMakeLists.txt добавить команду add_subdirectory(nlohmann_json)
 
 Для работы Google Test без интернета необходимо:
   - Скачать библиотеку по ссылке: https://github.com/google/googletest/archive/609281088cfefc76f9d0ce82e1ff6c30cc3591e5.zip;
