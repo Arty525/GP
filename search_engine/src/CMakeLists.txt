@@ -9,13 +9,3 @@ add_executable (search_engine "${CMAKE_SOURCE_DIR}/tests/tests.cpp" "search_engi
 target_include_directories(search_engine PUBLIC ${INCLUDE_DIR})
 
 target_link_libraries(search_engine PRIVATE nlohmann_json::nlohmann_json)
-
-target_link_libraries(search_engine INTERFACE gtest_main)
-
-add_library (GTest::GTest INTERFACE IMPORTED)
-
-target_link_libraries(search_engine PRIVATE gtest_main)
-
-gtest_discover_tests(search_engine)
-
-add_test (se_gtests tests)
